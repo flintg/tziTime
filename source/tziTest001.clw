@@ -26,22 +26,22 @@ wMiliseconds    USHORT
               END
 lpTimeZoneInformation GROUP,TYPE
 Bias                    LONG
-StandardName            STRING(32)
+StandardName            STRING(64)
 StandardDate            LIKE(lpSystemTime)
 StandardBias            LONG
-DaylightName            STRING(32)
+DaylightName            STRING(64)
 DaylightDate            LIKE(lpSystemTime)
 DaylightBias            LONG
                       END
 lpDynamicTimeZoneInformation  GROUP,TYPE
 Bias                            LONG
-StandardName                    STRING(32)
+StandardName                    STRING(64)
 StandardDate                    LIKE(lpSystemTime)
 StandardBias                    LONG
-DaylightName                    STRING(32)
+DaylightName                    STRING(64)
 DaylightDate                    LIKE(lpSystemTime)
 DaylightBias                    LONG
-TimeZoneKeyName                 STRING(128)
+TimeZoneKeyName                 STRING(256)
 DynamicDaylightTimeDisabled     BYTE
                       END
 st  StringTheory
@@ -49,20 +49,20 @@ st  StringTheory
 dtzi_Bias            LONG                                  ! Dynamic time zone bias
 dtzi_DaylightBias    LONG                                  ! Dynamic daylight bias
 dtzi_DaylightDate    LIKE(lpSystemTime)                    ! Dynamic daylight date
-dtzi_DaylightName    STRING(32)                            ! Dynamic daylight name
+dtzi_DaylightName    STRING(64)                            ! Dynamic daylight name
 dtzi_DynamicDaylightTimeDisabled BYTE                      ! Dynamic daylight time disabled
 dtzi_StandardBias    LONG                                  ! Dynamic standard bias
 dtzi_StandardDate    LIKE(lpSystemTime)                    ! Dynamic standard date
-dtzi_StandardName    STRING(32)                            ! Dynamic standard name
-dtzi_TimeZoneKeyName STRING(128)                           ! Dynamic time zone key name
+dtzi_StandardName    STRING(64)                            ! Dynamic standard name
+dtzi_TimeZoneKeyName STRING(256)                           ! Dynamic time zone key name
 
 tzi_Bias             LONG                                  ! Time zone bias
 tzi_DaylightBias     LONG                                  ! Daylight bias
 tzi_DaylightDate     ULONG                                 ! Daylight date
-tzi_DaylightName     STRING(32)                            ! Daylight time zone name
+tzi_DaylightName     STRING(64)                            ! Daylight time zone name
 tzi_StandardBias     LONG                                  ! Standard bias
 tzi_StandardDate     ULONG                                 ! Standard date
-tzi_StandardName     STRING(32)                            ! Standard time zone name
+tzi_StandardName     STRING(64)                            ! Standard time zone name
 
 tzi     GROUP(lpTimeZoneInformation)
         END
@@ -72,14 +72,6 @@ Window               WINDOW('Time Zone Informations'),AT(,,395,224),FONT('Micros
                        BUTTON('GetTimeZoneInformation'),AT(17,19),USE(?getTZI:Button)
                        BUTTON('GetDynamicTimeZoneInformation'),AT(17,41),USE(?getDTZI:Button)
                      END
-  MAP
-    MODULE('winapi')
-      GetTimeZoneInformation(ULONG lpTimeZoneInformation), ULONG, RAW, PASCAL, NAME('GetTimeZoneInformation')
-    END
-    MODULE('Kernel32')
-      GetDynamicTimeZoneInformation(ULONG lpDynamicTimeZoneInformation), ULONG, RAW, PASCAL, NAME('GetDynamicTimeZoneInformation')
-    END
-  END
   CODE
   PUSHBIND
   LocalRequest    = GlobalRequest
